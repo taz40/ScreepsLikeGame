@@ -20,12 +20,12 @@ public class Main extends LightsOut {
 	@Override
 	protected void init() {
 		// TODO Auto-generated method stub
-		createDisplay(Reference.name + " - Server " + " v. " + Reference.version, Reference.width, Reference.height);
+		createDisplay(Reference.name + " - Server " + " v. " + Reference.version, 100,100);
 		start();
 		Server server = new Server(false, 12345, "RoboScreeps");
 		s = NetworkUtils.NetInit();
 		NetworkUtils.connect("localhost", 12345, "Server_Client", "RoboScreeps", s, this);
-		NetworkUtils.createObject(ServerData.class, NetworkUtils.serverIP, 12345, s);
+		//NetworkUtils.createObject(ServerData.class, NetworkUtils.serverIP, 12345, s);
 	}
 
 	@Override
