@@ -25,8 +25,6 @@ public class ServerData extends Networked {
 		ArrayList<String> roomsList = new ArrayList<String>(Arrays.asList(data));
 		x = Integer.parseInt(data[0]);
 		y = Integer.parseInt(data[1]);
-		roomsList.remove(0);
-		roomsList.remove(0);
 		String[] data2 = {};
 		data2 = roomsList.toArray(data2);
 		rooms[x][y].recv(data2);

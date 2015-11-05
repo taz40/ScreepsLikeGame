@@ -29,7 +29,7 @@ public class Room {
 	public void recv(String[] data){
 		for(int x = 0; x < 50; x++){
 			for(int y = 0; y < 50; y++){
-				map[x][y] = Integer.parseInt(data[y + x * 50]);
+				map[x][y] = Integer.parseInt(data[y+2 + x * 50]);
 			}
 		}
 	}
