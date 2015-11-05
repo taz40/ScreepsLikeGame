@@ -6,6 +6,7 @@ import io.brace.lightsoutgaming.engine.graphics.SpriteSheet;
 public class Textures {
 	public static class Sheets{
 		public static SpriteSheet Map = new SpriteSheet("/Textures/Map.png");
+		public static SpriteSheet Entities = new SpriteSheet("/Textures/Entities.png");
 	}
 	
 	public static class Map{
@@ -22,5 +23,9 @@ public class Textures {
 		public static Sprite wallAllown = new Sprite(2,2,1,16,Textures.Sheets.Map);
 		public static Sprite energy = new Sprite(3,2,1,16,Textures.Sheets.Map);
 		public static Sprite Hover = new Sprite(0,3,1,16,Textures.Sheets.Map);
+	}
+	
+	public static class Entities{
+		public static Sprite Spawn = new Sprite(0,0,1,16,Textures.Sheets.Entities);
 	}
 }
