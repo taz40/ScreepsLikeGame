@@ -14,7 +14,7 @@ public class Room {
 		}
 	}
 	
-	int[][] map = new int[50][50];
+	public int[][] map = new int[50][50];
 
 	public String[] send(){
 		String[] data = new String[50*50];

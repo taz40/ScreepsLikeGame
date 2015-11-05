@@ -11,7 +11,7 @@ import com.weebly.lightsoutg4ming.screeps.References.Reference;
 
 public class Main extends LightsOut {
 	
-	DatagramSocket s;
+	public static DatagramSocket s;
 	
 	public static void main(String[] args){
 		new Main().init();
@@ -20,7 +20,7 @@ public class Main extends LightsOut {
 	@Override
 	protected void init() {
 		// TODO Auto-generated method stub
-		createDisplay(Reference.name + " v. " + Reference.version, Reference.width, Reference.height);
+		createDisplay(Reference.name + " - Server " + " v. " + Reference.version, Reference.width, Reference.height);
 		start();
 		Server server = new Server(false, 12345, "RoboScreeps");
 		s = NetworkUtils.NetInit();
@@ -39,7 +39,9 @@ public class Main extends LightsOut {
 	@Override
 	protected void update() {
 		// TODO Auto-generated method stub
-		
+		for(int i = 0; i < NetworkUtils.myObjects.size(); i++){
+			NetworkUtils.sendObject(NetworkUtils.myObjects.get(i), NetworkUtils.serverIP, 12345, s);
+		}
 	}
 
 }

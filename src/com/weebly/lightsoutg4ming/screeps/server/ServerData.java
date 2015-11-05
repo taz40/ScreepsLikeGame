@@ -1,5 +1,6 @@
 package com.weebly.lightsoutg4ming.screeps.server;
 
+import java.net.NetworkInterface;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -8,33 +9,45 @@ import io.brace.lightsoutgaming.engine.graphics.Screen;
 
 public class ServerData extends Networked {
 	
-	Room[][] rooms = new Room[7][7];
-
-	@Override
-	public void recv(String[] data) {
-		ArrayList<String> roomsList = (ArrayList<String>) Arrays.asList(data);
+	public static Room[][] rooms = new Room[7][7];
+	int x, y;
+	
+	public ServerData(){
 		for(int x = 0; x < 7; x++){
 			for(int y = 0; y < 7; y++){
-				String[] data2 = {};
-				roomsList.toArray(data2);
-				rooms[x][y].recv(data2);
-				for(int i = 0; i < 50*50; i++){
-					roomsList.remove(0);
-				}
+				rooms[x][y] = new Room();
 			}
 		}
 	}
 
 	@Override
+	public void recv(String[] data) {
+		ArrayList<String> roomsList = new ArrayList<String>(Arrays.asList(data));
+		x = Integer.parseInt(data[0]);
+		y = Integer.parseInt(data[1]);
+		roomsList.remove(0);
+		roomsList.remove(0);
+		String[] data2 = {};
+		data2 = roomsList.toArray(data2);
+		rooms[x][y].recv(data2);
+	}
+
+	@Override
 	public String[] send() {
 		ArrayList<String> roomsList = new ArrayList<String>();
-		for(int x = 0; x < 7; x++){
-			for(int y = 0; y < 7; y++){
-				roomsList.addAll(Arrays.asList(rooms[x][y].send()));
-			}
+		roomsList.add(Integer.toString(x));
+		roomsList.add(Integer.toString(y));
+		roomsList.addAll(Arrays.asList(rooms[x][y].send()));
+		x++;
+		if(x >= 7){
+			x = 0;
+			y++;
+		}
+		if(y >= 7){
+			y = 0;
 		}
 		String[] data = {};
-		roomsList.toArray(data);
+		data = roomsList.toArray(data);
 		return data;
 	}
 
