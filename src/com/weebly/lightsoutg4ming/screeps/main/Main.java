@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
 import com.weebly.lightsoutg4ming.screeps.References.Textures;
+
+import io.brace.lightsoutgaming.engine.input.Keyboard;
+import io.brace.lightsoutgaming.engine.input.Mouse;
 public class Main extends Component implements Runnable {
 	/**
 	 * 
@@ -19,17 +22,25 @@ public class Main extends Component implements Runnable {
 		frame.setVisible(true);
 		frame.add(this);
 		new Thread(this).start();
+		addMouseListener(new Mouse());
+		addKeyListener(new Keyboard());
+		addMouseMotionListener(new Mouse());
 	}
 
 	@Override
 	public void paint(Graphics g) {
 		// TODO Auto-generated method stub
 		super.paint(g);
-		g.setColor(Color.black);
+		g.setColor(Color.lightGray);
 		g.fillRect(0, 0, 800, 800);
-		//Render Things
+		g.drawImage(Textures.Map.wallSingle, 16, 16, null);
+		g.drawImage(Textures.Map.selected, Mouse.mouseX/16*16, Mouse.mouseY/16*16, null);
 		g.setColor(Color.white);
 		g.drawString(fps+" fps", 10, 10);
+	}
+	
+	public void update(){
+		
 	}
 
 	@Override
@@ -40,6 +51,7 @@ public class Main extends Component implements Runnable {
 		int frames = 0;
 		while(running){
 			repaint();
+			update();
 			timePassed += (int) (System.currentTimeMillis() - last);
 			last = System.currentTimeMillis();
 			frames++;
