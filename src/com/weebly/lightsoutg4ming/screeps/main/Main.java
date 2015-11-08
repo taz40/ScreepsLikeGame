@@ -3,7 +3,8 @@ package com.weebly.lightsoutg4ming.screeps.main;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
-import com.weebly.lightsoutg4ming.screeps.References.Textures;
+
+import com.weebly.lightsoutg4ming.screeps.Entities.Map;
 
 import io.brace.lightsoutgaming.engine.input.Keyboard;
 import io.brace.lightsoutgaming.engine.input.Mouse;
@@ -15,10 +16,14 @@ public class Main extends Component implements Runnable {
 	
 	boolean running = true;
 	int fps = 0;
+	Map map = new Map("/Rooms/Room00.png");
+	public static double zoom = 1;
 
 	public Main(){
 		System.out.println("success");
 		GameWindow frame = new GameWindow();
+		frame.setBounds(100, 100, 616, 648);
+		frame.setResizable(false);
 		frame.setVisible(true);
 		frame.add(this);
 		new Thread(this).start();
@@ -33,14 +38,13 @@ public class Main extends Component implements Runnable {
 		super.paint(g);
 		g.setColor(Color.lightGray);
 		g.fillRect(0, 0, 800, 800);
-		g.drawImage(Textures.Map.wallSingle, 16, 16, null);
-		g.drawImage(Textures.Map.selected, Mouse.mouseX/16*16, Mouse.mouseY/16*16, null);
+		map.draw(g);
 		g.setColor(Color.white);
 		g.drawString(fps+" fps", 10, 10);
 	}
 	
 	public void update(){
-		
+		map.update();
 	}
 
 	@Override
