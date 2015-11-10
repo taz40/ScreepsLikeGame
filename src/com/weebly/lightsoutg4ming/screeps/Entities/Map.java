@@ -90,7 +90,8 @@ public class Map extends Entity {
 	@Override
 	public void draw(Graphics g) {
 		// TODO Auto-generated method stub
-		g.drawImage(map, 0, 0, 600, 600, 0, 0, 800, 800, null);
+		int padding = (int)(((800f*Main.zoom)-800f)/2);
+		g.drawImage(map, 0, 0, 600, 600, (int)(padding/Main.zoom), (int)(padding/Main.zoom), (int)(((800*Main.zoom)-padding)/Main.zoom), (int)(((800*Main.zoom)-padding)/Main.zoom), null);
 	}
 
 	@Override

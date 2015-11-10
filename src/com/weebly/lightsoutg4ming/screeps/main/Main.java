@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.Graphics;
 
 import com.weebly.lightsoutg4ming.screeps.Entities.Map;
+import com.weebly.lightsoutg4ming.screeps.Input.ScrollWheel;
 
 import io.brace.lightsoutgaming.engine.input.Keyboard;
 import io.brace.lightsoutgaming.engine.input.Mouse;
@@ -30,6 +31,7 @@ public class Main extends Component implements Runnable {
 		addMouseListener(new Mouse());
 		addKeyListener(new Keyboard());
 		addMouseMotionListener(new Mouse());
+		this.addMouseWheelListener(new ScrollWheel());
 	}
 
 	@Override
@@ -45,6 +47,10 @@ public class Main extends Component implements Runnable {
 	
 	public void update(){
 		map.update();
+		if(ScrollWheel.changed){
+			Main.zoom -= ScrollWheel.changeInPosition*.1*(Main.zoom);
+			ScrollWheel.changed = false;
+		}
 	}
 
 	@Override
