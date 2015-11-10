@@ -1,11 +1,14 @@
 package com.weebly.lightsoutg4ming.screeps.Entities;
 
+import io.brace.lightsoutgaming.engine.input.Mouse;
+
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import com.weebly.lightsoutg4ming.screeps.Input.MouseDrag;
 import com.weebly.lightsoutg4ming.screeps.References.Textures;
 import com.weebly.lightsoutg4ming.screeps.main.Main;
 
@@ -14,6 +17,7 @@ public class Map extends Entity {
 	BufferedImage map;
 	int[][] pixels;
 	int width, height;
+	float x, y;
 	
 	public Map(String path){
 		try {
@@ -90,14 +94,30 @@ public class Map extends Entity {
 	@Override
 	public void draw(Graphics g) {
 		// TODO Auto-generated method stub
-		int padding = (int)(((800f*Main.zoom)-800f)/2);
-		g.drawImage(map, 0, 0, 600, 600, (int)(padding/Main.zoom), (int)(padding/Main.zoom), (int)(((800*Main.zoom)-padding)/Main.zoom), (int)(((800*Main.zoom)-padding)/Main.zoom), null);
+		float padding = (float)(((800f*Main.zoom)-800f)/2);
+		g.drawImage(map, 0, 0, 600, 600, (int)((padding+x)/Main.zoom), (int)((padding+y)/Main.zoom), (int)(((800*Main.zoom+x)-padding)/Main.zoom), (int)(((800*Main.zoom+y)-padding)/Main.zoom), null);
+		int divisions = (int) (12*Main.zoom);
+		int sX = ((Mouse.mouseX))/divisions*divisions-(int)((x*600/800)/divisions);
+		int sY = ((Mouse.mouseY))/divisions*divisions-(int)((y*600/800)/divisions);
+		g.drawImage(Textures.Map.selected, sX, sY, sX+(divisions), sY+(divisions), 0, 0, 16, 16, null);
 	}
 
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
-		
+		x += (MouseDrag.DragStartX - MouseDrag.DragX)*800/600;
+		y += (MouseDrag.DragStartY - MouseDrag.DragY)*800/600;
+		MouseDrag.DragStartX = MouseDrag.DragX;
+		MouseDrag.DragStartY = MouseDrag.DragY;
+		float padding = (float)(((800f*Main.zoom)-800f)/2);
+		if(((padding+x)/Main.zoom) < 0)
+			x = -padding;
+		if((((800*Main.zoom+x)-padding)/Main.zoom) > 800)
+			x = padding;
+		if(((padding+y)/Main.zoom) < 0)
+			y = -padding;
+		if((((800*Main.zoom+y)-padding)/Main.zoom) > 800)
+			y = padding;
 	}
 
 }

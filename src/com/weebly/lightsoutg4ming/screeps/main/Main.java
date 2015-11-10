@@ -1,14 +1,16 @@
 package com.weebly.lightsoutg4ming.screeps.main;
 
+import io.brace.lightsoutgaming.engine.input.Keyboard;
+import io.brace.lightsoutgaming.engine.input.Mouse;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
 
 import com.weebly.lightsoutg4ming.screeps.Entities.Map;
+import com.weebly.lightsoutg4ming.screeps.Input.MouseDrag;
 import com.weebly.lightsoutg4ming.screeps.Input.ScrollWheel;
-
-import io.brace.lightsoutgaming.engine.input.Keyboard;
-import io.brace.lightsoutgaming.engine.input.Mouse;
+import com.weebly.lightsoutg4ming.screeps.References.Textures;
 public class Main extends Component implements Runnable {
 	/**
 	 * 
@@ -31,6 +33,8 @@ public class Main extends Component implements Runnable {
 		addMouseListener(new Mouse());
 		addKeyListener(new Keyboard());
 		addMouseMotionListener(new Mouse());
+		addMouseListener(new MouseDrag());
+		addMouseMotionListener(new MouseDrag());
 		this.addMouseWheelListener(new ScrollWheel());
 	}
 
@@ -50,6 +54,10 @@ public class Main extends Component implements Runnable {
 		if(ScrollWheel.changed){
 			Main.zoom -= ScrollWheel.changeInPosition*.1*(Main.zoom);
 			ScrollWheel.changed = false;
+			if(zoom < 1)
+				zoom = 1;
+			if(zoom > 5)
+				zoom = 5;
 		}
 	}
 
